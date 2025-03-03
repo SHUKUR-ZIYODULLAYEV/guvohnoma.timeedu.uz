@@ -1,63 +1,113 @@
 .sidebar {
-    width: 200px;
-    background: #1e2b38;
-    color: white;
-    height: 100vh;
-    transition: width 0.3s ease;
-  }
-  
-  .sidebar.closed {
-    width: 60px;
-  }
-  
-  .toggleBtn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .menu {
-    padding: 10px;
-  }
-  
-  .menuTitle {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px;
-    color: #ccc;
-  }
-  
-  .menuTitle svg {
-    margin-right: 8px;
-  }
-  
-  .sidebar ul {
-    padding: 0;
-    list-style: none;
-  }
-  
-  .sidebar ul li {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .sidebar ul li svg {
-    font-size: 16px;
-    margin-right: 10px;
-  }
-  
-  .sidebar ul li:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  
-  .sidebar.closed ul li span {
-    display: none;
-  }
-  
+  width: 200px;
+  background: #1e2b38;
+  color: white;
+  height: 100vh;
+  transition: width 0.3s ease;
+}
+
+.sidebar.closed {
+  width: 60px;
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu {
+  padding: 0;
+}
+
+.dropdownButton {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.dropdownButton svg {
+  margin-right: 8px;
+}
+
+.dropdownMenu {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #2C3B41;
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s ease;
+}
+
+.dropdownMenu.openDropdown {
+  height: 150px;
+}
+
+.dropdownMenu li {
+  font-size: 14px;
+  font-weight: normal;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  color: #ccc;
+  cursor: pointer;
+}
+
+/* 🔽 Hover bo‘lganda text oq bo‘ladi */
+.dropdownMenu li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.dropdownMenu li.active {
+  color: white;
+  font-weight: bold;
+}
+
+.radio {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  margin-right: 8px;
+}
+
+.filledRadio {
+  background: white;
+}
+
+.sidebar ul {
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar ul li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.sidebar ul li svg {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+/* 🔽 Hover bo‘lganda text oq bo‘ladi */
+.sidebar ul li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.sidebar.closed ul li span {
+  display: none;
+}

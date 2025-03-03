@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // 🚀 Yo‘naltirish uchun
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
+import { logout } from "../store/authSlice";
 import styles from "./Header.module.css";
 
 const Header = () => {
   const [isLanguageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
-  const navigate = useNavigate(); // ✅ Navigatsiya qilish uchun
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // 🔽 Sahifa bo‘ylab bosilganda dropdownlarni yopamiz
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    dispatch(logout());
+    navigate("/login");
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -29,17 +38,14 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      {/* 🔽 Guvohnoma OTM logotipi (Tugma!) */}
       <div
         className={styles.logo}
-        onClick={() => navigate("/")} // ✅ Asosiy sahifaga yo‘naltiradi
+        onClick={() => navigate("/")}
       >
         Guvohnoma OTM
       </div>
 
-      {/* 🔽 O‘zbekcha tugma + Profilni bitta div ichida joylashtiramiz */}
       <div className={styles.headerRight}>
-        {/* 🔽 Til tanlash qismi */}
         <div
           className={styles.languageSelector}
           onClick={(e) => {
@@ -57,7 +63,6 @@ const Header = () => {
           )}
         </div>
 
-        {/* 👤 Profil qismi */}
         <div
           className={styles.profile}
           onClick={(e) => {
@@ -72,19 +77,20 @@ const Header = () => {
             <span className={styles.role}>Admin</span>
           </div>
 
-          {/* 🔽 Profil dropdown */}
           {isProfileDropdownOpen && (
             <ul className={styles.profileDropdown}>
-            <li className={styles.dropdownTitle}>Foydalanuvchi rollari</li>
-            <li>API User</li>
-            <li>Kadrlar bo'limi</li>
-            <li>Kafedra mudiri</li>
-            <li>O‘qituvchi</li>
-            <li className={styles.activeRole}>Registrator ofisi</li>
-            <hr />
-            <li>Profil</li>
-            <li className={styles.logout}><span>↩️</span> Chiqish</li>
-          </ul>
+              <li className={styles.dropdownTitle}>Foydalanuvchi rollari</li>
+              <li>API User</li>
+              <li>Kadrlar bo'limi</li>
+              <li>Kafedra mudiri</li>
+              <li>O‘qituvchi</li>
+              <li className={styles.activeRole}>Registrator ofisi</li>
+              <hr />
+              <li>Profil</li>
+              <li className={styles.logout} onClick={handleLogout}>
+                <span>↩️</span> Chiqish
+              </li>
+            </ul>
           )}
         </div>
       </div>
