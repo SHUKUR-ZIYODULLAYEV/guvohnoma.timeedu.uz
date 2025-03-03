@@ -1,44 +1,165 @@
+/* 🟦 HEADER UCHUN */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #3983b2;
-    color: white;
-    padding: 10px 20px;
-  }
-  
-  .logo {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .language {
-    font-size: 14px;
-  }
-  
-  .user {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .user div {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .user strong {
-    font-size: 14px;
-  }
-  
-  .user span {
-    font-size: 12px;
-    color: #ddd;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #3482b8;
+  padding: 0 20px 0 0;
+  color: white;
+  height: 60px;
+}
+
+/* 🟦 HEADER O‘NG TOMONI (TIL VA PROFIL) */
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 🔽 Guvohnoma OTM tugma */
+.logo {
+  position: relative;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: larger;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  height: 60px; /* ✅ Profil bilan bir xil bo‘lishi uchun */
+  width: 200px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.logo:hover {
+  background: #367FA9; /* ✅ Hover effekti */
+}
+
+/* 🌍 TIL TANLASH */
+.languageSelector {
+  position: relative;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  height: 60px; /* ✅ Profil bilan bir xil bo‘lishi uchun */
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.languageSelector:hover {
+  background: #367FA9;
+}
+
+/* 🌍 TIL DROPDOWN */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  color: black;
+  list-style: none;
+  padding: 5px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  min-width: 120px;
+  text-align: left;
+  z-index: 10;
+}
+
+.dropdown li {
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #ddd;
+}
+
+/* 👤 PROFIL UCHUN */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.profile:hover {
+  background: #367FA9;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.role {
+  font-size: 0.9rem;
+  color: #e0e0e0;
+}
+
+/* 🔽 PROFIL DROPDOWN */
+.profileDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  color: black;
+  list-style: none;
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  min-width: 200px;
+  text-align: left;
+  z-index: 10;
+}
+
+/* 🔹 PROFIL DROPDOWN ELEMENTLARI */
+.profileDropdown li {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.profileDropdown .dropdownTitle {
+  font-weight: bold;
+  color: #555;
+  padding-bottom: 5px;
+}
+
+.profileDropdown .activeRole {
+  background: #367FA9;
+  color: white;
+  font-weight: bold;
+}
+
+/* 🔹 PROFIL DROPDOWN ELEMENTLARI HOVER */
+.profileDropdown li:hover {
+  background: #ddd;
+}
+
+/* 🔽 CHIQISH TUGMASI */
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  color: red;
+}
