@@ -1,0 +1,23 @@
+.layout {
+    display: flex;
+  }
+  
+  .main {
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .sidebarOpen {
+    margin-left: 200px;
+  }
+  
+  .sidebarClosed {
+    margin-left: 60px;
+  }
+  
+  .content {
+    padding: 20px;
+    background: white;
+    min-height: 100vh;
+  }
+  

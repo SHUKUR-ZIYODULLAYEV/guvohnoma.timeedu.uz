@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/authSlice";
 import { supabase } from "../../lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
+import styles from "./Login.module.css";
+import { FiUser, FiEye } from "react-icons/fi"; // 📌 To‘g‘ri ikonalarni ishlatamiz
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,9 +24,8 @@ const Login = () => {
     }
 
     if (data.user) {
-      // 🔍 Profile dan role-ni olish
       const { data: profileData, error: profileError } = await supabase
-        .from("profiles") // 🎯 Supabase-da "profiles" jadvali bo‘lishi kerak
+        .from("profiles")
         .select("role")
         .eq("id", data.user.id)
         .single();
@@ -35,35 +36,49 @@ const Login = () => {
         return;
       }
 
-      // Redux-ga user ma’lumotlarini saqlaymiz
       dispatch(
         loginSuccess({
           id: data.user.id,
           email: data.user.email ?? "",
-          role: profileData?.role || "user", // Agar role yo‘q bo‘lsa, default "user"
+          role: profileData?.role || "user",
         })
       );
 
-      navigate("/"); // 🎯 Login bo‘lgandan keyin main sahifaga yo‘naltirish
+      navigate("/");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <img src="/images/logo.png" alt="Logo" className={styles.logo} />
+        <h2 className={styles.title}>Toshkent menejment va iqtisodiyot instituti</h2>
+        <p className={styles.subtitle}>Guvohnoma Student axborot tizimi</p>
+
+        <div className={styles.inputGroup}>
+          <input
+            type="email"
+            placeholder="Talaba ID"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <FiUser className={styles.icon} />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <input
+            type="password"
+            placeholder="Parol"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <FiEye className={styles.icon} />
+        </div>
+
+        <button className={styles.button} onClick={handleLogin}>
+          Kirish
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,22 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
-import { logout } from "../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import styles from "./Header.module.css";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login"); // Logout bo‘lgandan keyin login sahifasiga yo‘naltirish
-  };
-
   return (
-    <header style={{ display: "flex", justifyContent: "space-between", padding: "10px", background: "#eee" }}>
-      <h2>My App</h2>
-      {isAuthenticated && <button onClick={handleLogout}>Logout</button>}
+    <header className={styles.header}>
+      <h1 className={styles.logo}>Guvohnoma OTM</h1>
+      <span className={styles.language}>O'zbekcha</span>
+      <div className={styles.user}>
+        <img src="/images/profile.jpg" alt="User" />
+        <div>
+          <strong>SHUKUR ZIYODULLAYEV</strong>
+          <span>Admin</span>
+        </div>
+      </div>
     </header>
   );
 };
