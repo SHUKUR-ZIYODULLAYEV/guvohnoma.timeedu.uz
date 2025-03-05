@@ -11,7 +11,7 @@
   
   .content {
     flex: 1;
-    padding: 20px;
+    padding: 0;
     background: #fff; /* Orqa fon oq rangda bo‘lishi uchun */
   }
   

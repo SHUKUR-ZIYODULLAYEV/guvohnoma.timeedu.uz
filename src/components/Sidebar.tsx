@@ -1,11 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSidebar } from "../store/sidebarSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Yo‘naltirish uchun import
 import styles from "./Sidebar.module.css";
 import { FaBars, FaCalendarAlt } from "react-icons/fa";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // ✅ Router yo‘naltirish
   const isSidebarOpen = useSelector((state: any) => state.sidebar.isSidebarOpen);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -15,7 +17,10 @@ const Sidebar = () => {
   };
 
   const handleSelect = (item: string) => {
-    setSelectedItem(item); // ✅ Element tanlangan bo‘ladi
+    setSelectedItem(item);
+    if (item === "davomat") {
+      navigate("/attendance-journal"); // ✅ Davomat jurnali sahifasiga yo‘naltirish
+    }
   };
 
   return (
@@ -24,20 +29,19 @@ const Sidebar = () => {
         className={styles.toggleBtn}
         onClick={() => {
           dispatch(toggleSidebar());
-          setDropdownOpen(false); // ✅ Sidebar yopilganda dropdown ham yopiladi
+          setDropdownOpen(false);
+          setSelectedItem(null); // ✅ Sidebar yopilganda tanlovni tozalaydi
         }}
       >
         <FaBars />
       </button>
       
       <div className={styles.menu}>
-        {/* 🔽 Mashg‘ulotlar tugmasi */}
         <div className={styles.dropdownButton} onClick={toggleDropdown}>
           <FaCalendarAlt />
           {isSidebarOpen && <span>Mashg‘ulotlar</span>}
         </div>
 
-        {/* 🔽 Dropdown menyu */}
         <ul className={`${styles.dropdownMenu} ${isDropdownOpen ? styles.openDropdown : ""}`}>
           <li
             className={selectedItem === "jadval" ? styles.active : ""}

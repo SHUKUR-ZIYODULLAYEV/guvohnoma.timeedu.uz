@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
-import sidebarReducer from "./sidebarSlice"; // Sidebar slice ni qo'shish
+import sidebarReducer from "./sidebarSlice";
+import attendanceJournalReducer from "./attendanceJournalSlice"; // Yangi qo'shilgan slice
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    sidebar: sidebarReducer, // Sidebar holatini saqlash
+    sidebar: sidebarReducer,
+    attendanceJournal: attendanceJournalReducer, // Dars jadvali ma'lumotlari uchun reducer
   },
 });
 

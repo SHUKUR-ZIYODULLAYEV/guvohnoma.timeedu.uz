@@ -5,4 +5,7 @@ html, body {
     height: 100%;
     overflow: hidden;
   }
+  * {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
   
