@@ -1,24 +1,10 @@
 // src/store/attendanceJournalSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { data } from "../data/data";
-
-interface AttendanceJournal {
-  id: number;
-  group: string;
-  subject: string;
-  type: string;
-  year: string;
-  semester: string;
-  employee: string;
-  groupStudents: {
-    id: number;
-    fullname: string;
-    infoattendance: { date: string; pair: string; attendance: string | null }[];
-  }[];
-}
+import { FromAttendanceJournal } from "../types/types"; // ✅ types.ts dan import qilish
 
 interface AttendanceState {
-  selectedJournal: AttendanceJournal | null;
+  selectedJournal: FromAttendanceJournal | null;
 }
 
 const initialState: AttendanceState = {
@@ -30,7 +16,20 @@ const attendanceJournalSlice = createSlice({
   initialState,
   reducers: {
     setSelectedJournal: (state, action: PayloadAction<number>) => {
-      state.selectedJournal = data.find((item) => item.id === action.payload) || null;
+      const foundJournal = data.find((item) => item.id === action.payload);
+
+      if (foundJournal) {
+        state.selectedJournal = {
+          group: foundJournal.group,
+          subject: foundJournal.subject,
+          type: foundJournal.type,
+          employee: foundJournal.employee,
+          attendanceDate: foundJournal.attendanceDate || [], // ✅ `attendanceDate` qo‘shildi
+          groupStudents: foundJournal.groupStudents || [],
+        };
+      } else {
+        state.selectedJournal = null;
+      }
     },
   },
 });
