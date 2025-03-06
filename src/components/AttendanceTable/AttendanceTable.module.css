@@ -40,4 +40,17 @@
     color: #555;
     padding-top: 2px;
   }
+  .dateButton {
+    cursor: pointer;
+    background-color: #00a65a;
+    padding: 3px 7px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .dateButton:hover {
+    background-color: #008f4c;
+  }
   

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FromAttendanceJournal, AttendanceDate, Student, InfoAttendance } from "../../types/types";
 import styles from "./AttendanceTable.module.css";
 
@@ -6,6 +7,13 @@ interface AttendanceTableProps {
 }
 
 const AttendanceTable: React.FC<AttendanceTableProps> = ({ selectedData }) => {
+  const navigate = useNavigate();
+
+  const handleDateClick = (lessonDateId: string) => {
+    console.log("Clicked date:", lessonDateId);
+    navigate(`/attendance-journal/1/${lessonDateId}`);
+  };
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -19,7 +27,14 @@ const AttendanceTable: React.FC<AttendanceTableProps> = ({ selectedData }) => {
           </tr>
           <tr>
             {selectedData.attendanceDate?.map((dateInfo: AttendanceDate, index: number) => (
-              <th key={index}>{dateInfo.date}</th>
+              <th key={index}>
+                <button
+                  className={styles.dateButton}
+                  onClick={() => handleDateClick(dateInfo.date)}
+                >
+                  {dateInfo.date}
+                </button>
+              </th>
             ))}
           </tr>
           <tr>
