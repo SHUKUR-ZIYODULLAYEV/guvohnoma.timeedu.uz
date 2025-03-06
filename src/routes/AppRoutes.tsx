@@ -3,6 +3,7 @@ import Login from "../pages/Login/Login";
 import Main from "../pages/Main/Main";
 import AttendanceJournal from "../pages/AttendanceJournal/AttendanceJournal";
 import AttendanceJournalDetails from "../pages/AttendanceJournalDetails/AttendanceJournalDetails";
+import AttendanceLessonDetails from "../pages/AttendanceLessonDetails/AttendanceLessonDetails";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import Unauthorized from "../pages/Unauthorized/Unauthorized";
 
@@ -13,6 +14,7 @@ const AppRoutes = () => {
       <Route path="/" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/attendance-journal" element={<ProtectedRoute requiredRole="admin"><AttendanceJournal /></ProtectedRoute>} />
       <Route path="/attendance-journal/:id" element={<ProtectedRoute requiredRole="admin"><AttendanceJournalDetails /></ProtectedRoute>} />
+      <Route path="/attendance-journal/:id/:lessonDateId" element={<ProtectedRoute requiredRole="admin"><AttendanceLessonDetails /></ProtectedRoute>} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<h2>404 - Not Found</h2>} />
     </Routes>

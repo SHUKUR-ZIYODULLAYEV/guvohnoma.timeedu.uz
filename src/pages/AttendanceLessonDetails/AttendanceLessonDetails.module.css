@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  gap: 20px;
+  background-color: #ECF0F5;
+  padding: 20px;
+  height: 100%;
+  margin: 0;
+  align-items: flex-start;
+  }
+  
+  .error {
+    color: red;
+    text-align: center;
+    font-size: 20px;
+  }
+  @media (max-width: 1024px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .tableContainer, .detailsContainer {
+      width: 100%;
+    }
+  }
+  
