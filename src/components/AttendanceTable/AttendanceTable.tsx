@@ -9,9 +9,8 @@ interface AttendanceTableProps {
 const AttendanceTable: React.FC<AttendanceTableProps> = ({ selectedData }) => {
   const navigate = useNavigate();
 
-  const handleDateClick = (lessonDateId: string) => {
-    console.log("Clicked date:", lessonDateId);
-    navigate(`/attendance-journal/1/${lessonDateId}`);
+  const handleDateClick = (lessonDateId: string, lessonPair: string) => {
+    navigate(`/attendance-journal/1/${lessonDateId}/${lessonPair}`);
   };
 
   return (
@@ -30,7 +29,7 @@ const AttendanceTable: React.FC<AttendanceTableProps> = ({ selectedData }) => {
               <th key={index}>
                 <button
                   className={styles.dateButton}
-                  onClick={() => handleDateClick(dateInfo.date)}
+                  onClick={() => handleDateClick(dateInfo.date, dateInfo.pair)}
                 >
                   {dateInfo.date}
                 </button>

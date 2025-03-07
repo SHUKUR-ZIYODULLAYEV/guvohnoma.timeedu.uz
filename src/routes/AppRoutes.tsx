@@ -14,7 +14,7 @@ const AppRoutes = () => {
       <Route path="/" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/attendance-journal" element={<ProtectedRoute requiredRole="admin"><AttendanceJournal /></ProtectedRoute>} />
       <Route path="/attendance-journal/:id" element={<ProtectedRoute requiredRole="admin"><AttendanceJournalDetails /></ProtectedRoute>} />
-      <Route path="/attendance-journal/:id/:lessonDateId" element={<ProtectedRoute requiredRole="admin"><AttendanceLessonDetails /></ProtectedRoute>} />
+      <Route path="/attendance-journal/:id/:lessonDateId/:lessonPair" element={<ProtectedRoute requiredRole="admin"><AttendanceLessonDetails /></ProtectedRoute>} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<h2>404 - Not Found</h2>} />
     </Routes>

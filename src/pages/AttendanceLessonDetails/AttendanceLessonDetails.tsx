@@ -3,12 +3,13 @@ import LessonAttendanceTable from "../../components/LessonAttendanceTable/Lesson
 import LessonAttendanceDetails from "../../components/LessonAttendanceDetails/LessonAttendanceDetails";
 import styles from "./AttendanceLessonDetails.module.css";
 import { data } from "../../data/data";
+import { FromAttendanceJournal, AttendanceDate } from "../../types/types";
 
 const AttendanceLessonDetails = () => {
-  const { lessonDateId } = useParams();
+  const { lessonDateId, lessonPair } = useParams();
 
   // lessonDateId bo‘yicha kerakli ma'lumotlarni olish
-  const selectedLesson = data.find((lesson) =>
+  const selectedLesson: FromAttendanceJournal | undefined = data.find((lesson) =>
     lesson.attendanceDate.some((date) => date.date === lessonDateId)
   );
 
@@ -18,9 +19,16 @@ const AttendanceLessonDetails = () => {
 
   return (
     <div className={styles.container}>
-      <LessonAttendanceTable selectedLesson={selectedLesson} lessonDateId={lessonDateId!} />
-      <LessonAttendanceDetails selectedLesson={selectedLesson} lessonDateId={lessonDateId!} />
-      </div>
+      <LessonAttendanceTable 
+        selectedLesson={selectedLesson} 
+        lessonDateId={lessonDateId!} 
+        lessonPair={lessonPair!}  />
+      <LessonAttendanceDetails 
+        selectedLesson={selectedLesson} 
+        lessonDateId={lessonDateId!} 
+        lessonPair={lessonPair!} 
+      />
+    </div>
   );
 };
 

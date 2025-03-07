@@ -10,6 +10,7 @@ export interface AttendanceDate {
     date: string;
     pair: string;
     attendance: number | null;
+    grade: number;
   }
   
   export interface Student {
@@ -21,9 +22,12 @@ export interface AttendanceDate {
   }
   
   export interface FromAttendanceJournal {
+    id: number;
     group: string;
     subject: string;
     type: string;
+    year: string;
+    semester: string;
     employee: string;
     attendanceDate: AttendanceDate[];
     groupStudents: Student[];

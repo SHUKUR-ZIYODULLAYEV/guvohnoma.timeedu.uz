@@ -1,19 +1,24 @@
 import React from "react";
 import styles from "./LessonAttendanceTable.module.css";
-import { Student } from "../../types/types";
+import { Student, InfoAttendance } from "../../types/types";
 
 interface LessonAttendanceTableProps {
-  selectedLesson: any;
+  selectedLesson: { groupStudents: Student[]; attendanceDate: { date: string; pair: string }[] };
   lessonDateId: string;
+  lessonPair: string;
 }
 
 const LessonAttendanceTable: React.FC<LessonAttendanceTableProps> = ({
   selectedLesson,
   lessonDateId,
+  lessonPair,
 }) => {
-  // Tanlangan sanaga tegishli attendance ma'lumotlarini olish
+  // Tanlangan sanaga va juftlikka tegishli attendance ma'lumotlarini olish
   const attendanceInfo = selectedLesson.groupStudents.map((student: Student) => {
-    const lessonData = student.infoattendance.find((info) => info.lessonDateId === lessonDateId);
+    const lessonData: InfoAttendance | undefined = student.infoattendance.find(
+      (info) => info.date === lessonDateId && info.pair === lessonPair
+    );
+
     return {
       fullname: student.fullname,
       attendance: lessonData?.attendance || "",
@@ -38,10 +43,10 @@ const LessonAttendanceTable: React.FC<LessonAttendanceTableProps> = ({
               <td>{index + 1}</td>
               <td>{student.fullname}</td>
               <td>
-                <input type="text" value={student.attendance} className={styles.inputField} />
+                <input type="text" value={student.attendance} className={styles.inputField} readOnly />
               </td>
               <td>
-                <input type="text" value={student.grade} className={styles.inputField} />
+                <input type="text" value={student.grade} className={styles.inputField} readOnly />
               </td>
             </tr>
           ))}
