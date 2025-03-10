@@ -20,6 +20,9 @@ const attendanceJournalSlice = createSlice({
 
       if (foundJournal) {
         state.selectedJournal = {
+          id:foundJournal.id,
+          year: foundJournal.year,
+          semester: foundJournal.semester,
           group: foundJournal.group,
           subject: foundJournal.subject,
           type: foundJournal.type,

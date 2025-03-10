@@ -126,7 +126,7 @@ export const data = [
         { date: "2025-01-27", pair: "2. 10:30-11:50", status:true},
         { date: "2025-01-29", pair: "2. 10:30-11:50", status:false},
         { date: "2025-01-29", pair: "4. 13:50-15:10", status:false},
-        { date: "2025-01-30", pair: "4. 13:50-15:10", status:false}
+        { date: "2025-01-29", pair: "4. 13:50-15:10", status:false}
       ],
       groupStudents: [
         {
@@ -150,7 +150,7 @@ export const data = [
             { date: "2025-01-27", pair: "2. 10:30-11:50", attendance: null, grade: 1 },
             { date: "2025-01-29", pair: "2. 10:30-11:50", attendance: null, grade: 0.7 },
             { date: "2025-01-29", pair: "4. 13:50-15:10", attendance: null, grade: 0.9 },
-            { date: "2025-01-29", pair: "4. 13:50-15:10", attendance: null, grade: 0.6 }
+            { date: "2025-01-29", pair: "4. 13:50-15:10", attendance: null, grade: 0.7 }
           ]
         }
       ]
