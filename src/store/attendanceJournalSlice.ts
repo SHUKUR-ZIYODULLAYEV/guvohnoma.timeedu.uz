@@ -1,14 +1,17 @@
-// src/store/attendanceJournalSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { data } from "../data/data";
 import { FromAttendanceJournal } from "../types/types"; // ✅ types.ts dan import qilish
 
 interface AttendanceState {
   selectedJournal: FromAttendanceJournal | null;
+  lessonDateId: string | null;
+  lessonPair: string | null;
 }
 
 const initialState: AttendanceState = {
   selectedJournal: null,
+  lessonDateId: null,
+  lessonPair: null,
 };
 
 const attendanceJournalSlice = createSlice({
@@ -17,25 +20,17 @@ const attendanceJournalSlice = createSlice({
   reducers: {
     setSelectedJournal: (state, action: PayloadAction<number>) => {
       const foundJournal = data.find((item) => item.id === action.payload);
-
-      if (foundJournal) {
-        state.selectedJournal = {
-          id:foundJournal.id,
-          year: foundJournal.year,
-          semester: foundJournal.semester,
-          group: foundJournal.group,
-          subject: foundJournal.subject,
-          type: foundJournal.type,
-          employee: foundJournal.employee,
-          attendanceDate: foundJournal.attendanceDate || [], // ✅ `attendanceDate` qo‘shildi
-          groupStudents: foundJournal.groupStudents || [],
-        };
-      } else {
-        state.selectedJournal = null;
-      }
+      state.selectedJournal = foundJournal || null;
+    },
+    setSelectedLesson: (
+      state,
+      action: PayloadAction<{ lessonDateId: string; lessonPair: string }>
+    ) => {
+      state.lessonDateId = action.payload.lessonDateId;
+      state.lessonPair = action.payload.lessonPair;
     },
   },
 });
 
-export const { setSelectedJournal } = attendanceJournalSlice.actions;
+export const { setSelectedJournal, setSelectedLesson } = attendanceJournalSlice.actions;
 export default attendanceJournalSlice.reducer;

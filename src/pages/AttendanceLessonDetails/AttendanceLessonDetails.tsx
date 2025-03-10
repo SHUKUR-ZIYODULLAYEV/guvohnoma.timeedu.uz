@@ -1,33 +1,22 @@
-import { useParams } from "react-router-dom";
 import LessonAttendanceTable from "../../components/LessonAttendanceTable/LessonAttendanceTable";
 import LessonAttendanceDetails from "../../components/LessonAttendanceDetails/LessonAttendanceDetails";
 import styles from "./AttendanceLessonDetails.module.css";
-import { data } from "../../data/data";
-import { FromAttendanceJournal, AttendanceDate } from "../../types/types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const AttendanceLessonDetails = () => {
-  const { lessonDateId, lessonPair } = useParams();
+  const selectedData = useSelector((state: RootState) => state.attendanceJournal.selectedJournal);
+  const lessonDateId = useSelector((state: RootState) => state.attendanceJournal.lessonDateId);
+  const lessonPair = useSelector((state: RootState) => state.attendanceJournal.lessonPair);
 
-  // lessonDateId bo‘yicha kerakli ma'lumotlarni olish
-  const selectedLesson: FromAttendanceJournal | undefined = data.find((lesson) =>
-    lesson.attendanceDate.some((date) => date.date === lessonDateId)
-  );
-
-  if (!selectedLesson) {
+  if (!selectedData || !lessonDateId || !lessonPair) {
     return <h2 className={styles.error}>Ma'lumot topilmadi</h2>;
   }
 
   return (
     <div className={styles.container}>
-      <LessonAttendanceTable 
-        selectedLesson={selectedLesson} 
-        lessonDateId={lessonDateId!} 
-        lessonPair={lessonPair!}  />
-      <LessonAttendanceDetails 
-        selectedLesson={selectedLesson} 
-        lessonDateId={lessonDateId!} 
-        lessonPair={lessonPair!} 
-      />
+      <LessonAttendanceTable />
+      <LessonAttendanceDetails />
     </div>
   );
 };

@@ -1,20 +1,19 @@
 import React from "react";
 import styles from "./LessonAttendanceDetails.module.css";
-import { FromAttendanceJournal, AttendanceDate } from "../../types/types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { AttendanceDate } from "../../types/types";
 
-interface LessonAttendanceDetailsProps {
-  selectedLesson: FromAttendanceJournal;
-  lessonDateId: string;
-  lessonPair: string;  // 🟢 Yangi prop qabul qilamiz
-}
+const LessonAttendanceDetails: React.FC = () => {
+  const selectedData = useSelector((state: RootState) => state.attendanceJournal.selectedJournal);
+  const lessonDateId = useSelector((state: RootState) => state.attendanceJournal.lessonDateId);
+  const lessonPair = useSelector((state: RootState) => state.attendanceJournal.lessonPair);
 
-const LessonAttendanceDetails: React.FC<LessonAttendanceDetailsProps> = ({
-  selectedLesson,
-  lessonDateId,
-  lessonPair
-}) => {
-  // 🟢 Tanlangan dars sanasiga VA juftlikka mos keladigan ma'lumotni olish
-  const lessonDateInfo: AttendanceDate | undefined = selectedLesson.attendanceDate.find(
+  if (!selectedData || !lessonDateId || !lessonPair) {
+    return <div>Ma'lumot topilmadi</div>;
+  }
+
+  const lessonDateInfo: AttendanceDate | undefined = selectedData.attendanceDate.find(
     (date) => date.date === lessonDateId && date.pair === lessonPair
   );
 
@@ -22,10 +21,10 @@ const LessonAttendanceDetails: React.FC<LessonAttendanceDetailsProps> = ({
     <div className={styles.detailsContainer}>
       <h2>Dars Tafsilotlari</h2>
       <p>
-        <strong>Guruh:</strong> {selectedLesson.group}
+        <strong>Guruh:</strong> {selectedData.group}
       </p>
       <p>
-        <strong>Fan:</strong> {selectedLesson.subject}
+        <strong>Fan:</strong> {selectedData.subject}
       </p>
       <p>
         <strong>Dars sanasi:</strong> {lessonDateId}
@@ -34,7 +33,7 @@ const LessonAttendanceDetails: React.FC<LessonAttendanceDetailsProps> = ({
         <strong>Juftlik:</strong> {lessonDateInfo?.pair || "Noma'lum"}
       </p>
       <p>
-        <strong>O'qituvchi:</strong> {selectedLesson.employee}
+        <strong>O'qituvchi:</strong> {selectedData.employee}
       </p>
     </div>
   );

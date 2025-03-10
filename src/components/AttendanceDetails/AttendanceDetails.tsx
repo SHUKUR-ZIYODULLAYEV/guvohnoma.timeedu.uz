@@ -1,11 +1,14 @@
-import { FromAttendanceJournal } from "../../types/types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import styles from "./AttendanceDetails.module.css";
 
-interface AttendanceDetailsProps {
-  selectedData: FromAttendanceJournal;
-}
+const AttendanceDetails: React.FC = () => {
+  const selectedData = useSelector((state: RootState) => state.attendanceJournal.selectedJournal);
 
-const AttendanceDetails: React.FC<AttendanceDetailsProps> = ({ selectedData }) => {
+  if (!selectedData) {
+    return <div>Ma'lumot topilmadi</div>;
+  }
+
   return (
     <div className={styles.detailsContainer}>
       <table className={styles.detailsTable}>

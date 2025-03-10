@@ -1,20 +1,19 @@
 import React from "react";
 import styles from "./LessonAttendanceTable.module.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import { Student, InfoAttendance } from "../../types/types";
 
-interface LessonAttendanceTableProps {
-  selectedLesson: { groupStudents: Student[]; attendanceDate: { date: string; pair: string }[] };
-  lessonDateId: string;
-  lessonPair: string;
-}
+const LessonAttendanceTable: React.FC = () => {
+  const selectedData = useSelector((state: RootState) => state.attendanceJournal.selectedJournal);
+  const lessonDateId = useSelector((state: RootState) => state.attendanceJournal.lessonDateId);
+  const lessonPair = useSelector((state: RootState) => state.attendanceJournal.lessonPair);
 
-const LessonAttendanceTable: React.FC<LessonAttendanceTableProps> = ({
-  selectedLesson,
-  lessonDateId,
-  lessonPair,
-}) => {
-  // Tanlangan sanaga va juftlikka tegishli attendance ma'lumotlarini olish
-  const attendanceInfo = selectedLesson.groupStudents.map((student: Student) => {
+  if (!selectedData || !lessonDateId || !lessonPair) {
+    return <div>Ma'lumot topilmadi</div>;
+  }
+
+  const attendanceInfo = selectedData.groupStudents.map((student: Student) => {
     const lessonData: InfoAttendance | undefined = student.infoattendance.find(
       (info) => info.date === lessonDateId && info.pair === lessonPair
     );
