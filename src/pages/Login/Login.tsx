@@ -1,50 +1,25 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../store/authSlice";
-import { supabase } from "../../lib/supabaseClient";
+import { login } from "../../store/authSlice";
+import { AppDispatch } from "../../store"; // ✅ Redux Toolkit uchun
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import { FiUser, FiEye } from "react-icons/fi"; // 📌 To‘g‘ri ikonalarni ishlatamiz
+import { FiUser, FiEye } from "react-icons/fi";
 
 const Login = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // ✅ Redux Toolkit
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      alert("Login yoki parol noto‘g‘ri!");
-      return;
-    }
-
-    if (data.user) {
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", data.user.id)
-        .single();
-
-      if (profileError) {
-        console.error("Role-ni olishda xatolik:", profileError);
-        alert("Foydalanuvchi roli aniqlanmadi!");
-        return;
-      }
-
-      dispatch(
-        loginSuccess({
-          id: data.user.id,
-          email: data.user.email ?? "",
-          role: profileData?.role || "user",
-        })
-      );
-
+    setError(null);
+    try {
+      await dispatch(login({ email, password })).unwrap(); // ✅ Xatolikni qo‘lga olish
       navigate("/");
+    } catch (err) {
+      setError(err as string);
     }
   };
 
@@ -54,6 +29,8 @@ const Login = () => {
         <img src="/images/logo.png" alt="Logo" className={styles.logo} />
         <h2 className={styles.title}>Toshkent menejment va iqtisodiyot instituti</h2>
         <p className={styles.subtitle}>Guvohnoma Student axborot tizimi</p>
+
+        {error && <p className={styles.error}>{error}</p>} {/* ✅ Xatolik ko‘rsatish */}
 
         <div className={styles.inputGroup}>
           <input

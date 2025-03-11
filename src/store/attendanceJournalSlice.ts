@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { data } from "../data/data";
-import { FromAttendanceJournal } from "../types/types"; // ✅ types.ts dan import qilish
+import { FromAttendanceJournal } from "../types/types";
 
 interface AttendanceState {
   selectedJournal: FromAttendanceJournal | null;
@@ -19,15 +19,10 @@ const attendanceJournalSlice = createSlice({
   initialState,
   reducers: {
     setSelectedJournal: (state, action: PayloadAction<number>) => {
-      const foundJournal = data.find((item) => item.id === action.payload);
-      state.selectedJournal = foundJournal || null;
+      state.selectedJournal = data.find((item) => item.id === action.payload) || null;
     },
-    setSelectedLesson: (
-      state,
-      action: PayloadAction<{ lessonDateId: string; lessonPair: string }>
-    ) => {
-      state.lessonDateId = action.payload.lessonDateId;
-      state.lessonPair = action.payload.lessonPair;
+    setSelectedLesson: (state, action: PayloadAction<{ lessonDateId: string; lessonPair: string }>) => {
+      Object.assign(state, action.payload); // ✅ Kodingizni soddalashtirdik
     },
   },
 });

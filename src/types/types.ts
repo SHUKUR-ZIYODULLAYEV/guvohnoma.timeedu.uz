@@ -32,4 +32,17 @@ export interface AttendanceDate {
     attendanceDate: AttendanceDate[];
     groupStudents: Student[];
   }
-  
+  export interface User {
+    id: string;
+    email: string;
+    fullname: string;
+    role: string;
+  }
+  export interface AuthState {
+    id: string | null;
+    email: string | null;
+    role: string | null;
+    isAuthenticated: boolean;
+    loading: boolean;
+    error: string | null;
+  }

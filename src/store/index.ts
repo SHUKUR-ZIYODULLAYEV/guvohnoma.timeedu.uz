@@ -1,14 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import sidebarReducer from "./sidebarSlice";
-import attendanceJournalReducer from "./attendanceJournalSlice"; // Yangi qo'shilgan slice
+import attendanceJournalReducer from "./attendanceJournalSlice";
+import usersReducer from "./usersSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     sidebar: sidebarReducer,
-    attendanceJournal: attendanceJournalReducer, // Dars jadvali ma'lumotlari uchun reducer
+    attendanceJournal: attendanceJournalReducer,
+    users: usersReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export type RootState = ReturnType<typeof store.getState>;

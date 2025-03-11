@@ -1,22 +1,18 @@
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "../../lib/supabaseClient";
-import { logout } from "../../store/authSlice";
-import styles from "./Main.module.css";
-const Main = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { Navigate } from "react-router-dom";
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    dispatch(logout());
-    navigate("/login");
-  };
+const Main = () => {
+  const { user, role, isAuthenticated } = useAppSelector((state) => state.auth); // ✅ Redux Toolkit ishlatish
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />; // 🔒 Foydalanuvchi login bo‘lmagan bo‘lsa, login sahifaga yo‘naltirish
+  }
 
   return (
-    <div className={styles.container}>
-      <h1>Main Page</h1>
-      <button onClick={handleLogout}>Logout</button>
+    <div>
+      <h1>Asosiy Sahifa</h1>
+      <p>Foydalanuvchi: {user?.fullname}</p>
+      <p>Rol: {role}</p>
     </div>
   );
 };
