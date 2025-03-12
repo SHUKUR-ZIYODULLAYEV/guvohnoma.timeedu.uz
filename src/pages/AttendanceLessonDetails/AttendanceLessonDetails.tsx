@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 const AttendanceLessonDetails = () => {
-  const selectedData = useSelector((state: RootState) => state.attendanceJournal.selectedJournal);
-  const lessonDateId = useSelector((state: RootState) => state.attendanceJournal.lessonDateId);
-  const lessonPair = useSelector((state: RootState) => state.attendanceJournal.lessonPair);
+  const { selectedJournal, lessonDateId, lessonPair } = useSelector(
+    (state: RootState) => state.attendanceJournal
+  );
 
-  if (!selectedData || !lessonDateId || !lessonPair) {
-    return <h2 className={styles.error}>Ma'lumot topilmadi</h2>;
+  if (!selectedJournal || !lessonDateId || !lessonPair) {
+    return <h2 className={styles.error ?? ""}>Ma'lumot topilmadi</h2>;
   }
 
   return (

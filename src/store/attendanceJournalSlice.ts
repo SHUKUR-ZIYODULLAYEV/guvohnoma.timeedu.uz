@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { data } from "../data/data";
 import { FromAttendanceJournal } from "../types/types";
 
 interface AttendanceState {
@@ -18,11 +17,13 @@ const attendanceJournalSlice = createSlice({
   name: "attendanceJournal",
   initialState,
   reducers: {
-    setSelectedJournal: (state, action: PayloadAction<number>) => {
-      state.selectedJournal = data.find((item) => item.id === action.payload) || null;
+    // ✅ Endi id emas, to‘liq obyekt qabul qiladi
+    setSelectedJournal: (state, action: PayloadAction<FromAttendanceJournal | null>) => {
+      state.selectedJournal = action.payload;
     },
     setSelectedLesson: (state, action: PayloadAction<{ lessonDateId: string; lessonPair: string }>) => {
-      Object.assign(state, action.payload); // ✅ Kodingizni soddalashtirdik
+      state.lessonDateId = action.payload.lessonDateId;
+      state.lessonPair = action.payload.lessonPair;
     },
   },
 });

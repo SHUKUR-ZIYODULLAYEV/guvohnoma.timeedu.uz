@@ -12,24 +12,22 @@ const AttendanceDetails: React.FC = () => {
   return (
     <div className={styles.detailsContainer}>
       <table className={styles.detailsTable}>
-        <tbody>
-          <tr>
-            <th>Guruh</th>
-            <td>{selectedData.group}</td>
-          </tr>
-          <tr>
-            <th>Fanlar</th>
-            <td>{selectedData.subject}</td>
-          </tr>
-          <tr>
-            <th>Mashg‘ulot</th>
-            <td>{selectedData.type}</td>
-          </tr>
-          <tr>
-            <th>Xodim</th>
-            <td>{selectedData.employee}</td>
-          </tr>
-        </tbody>
+        <tr>
+          <th>Guruh</th>
+          <td>{selectedData.group}</td>
+        </tr>
+        <tr>
+          <th>Fanlar</th>
+          <td>{selectedData.subject}</td>
+        </tr>
+        <tr>
+          <th>Mashg‘ulot</th>
+          <td>{selectedData.type}</td>
+        </tr>
+        <tr>
+          <th>Xodim</th>
+          <td>{selectedData.employee}</td>
+        </tr>
       </table>
     </div>
   );

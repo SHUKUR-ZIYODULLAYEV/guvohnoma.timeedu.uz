@@ -4,32 +4,22 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 const LessonAttendanceDetails: React.FC = () => {
-  const selectedData = useSelector((state: RootState) => state.attendanceJournal.selectedJournal);
-  const lessonDateId = useSelector((state: RootState) => state.attendanceJournal.lessonDateId);
-  const lessonPair = useSelector((state: RootState) => state.attendanceJournal.lessonPair);
+  const { selectedJournal, lessonDateId, lessonPair } = useSelector(
+    (state: RootState) => state.attendanceJournal
+  );
 
-  if (!selectedData || !lessonDateId || !lessonPair) {
+  if (!selectedJournal || !lessonDateId || !lessonPair) {
     return <div>Ma'lumot topilmadi</div>;
   }
-  
+
   return (
-    <div className={styles.detailsContainer}>
+    <div className={styles.detailsContainer ?? ""}>
       <h2>Dars Tafsilotlari</h2>
-      <p>
-        <strong>Guruh:</strong> {selectedData.group}
-      </p>
-      <p>
-        <strong>Fan:</strong> {selectedData.subject}
-      </p>
-      <p>
-        <strong>Dars sanasi:</strong> {lessonDateId}
-      </p>
-      <p>
-        <strong>Juftlik:</strong> {lessonPair}
-      </p>
-      <p>
-        <strong>O'qituvchi:</strong> {selectedData.employee}
-      </p>
+      <p><strong>Guruh:</strong> {selectedJournal.group}</p>
+      <p><strong>Fan:</strong> {selectedJournal.subject}</p>
+      <p><strong>Dars sanasi:</strong> {lessonDateId}</p>
+      <p><strong>Juftlik:</strong> {lessonPair}</p>
+      <p><strong>O'qituvchi:</strong> {selectedJournal.employee}</p>
     </div>
   );
 };

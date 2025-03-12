@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
-import { AttendanceDate, Student, InfoAttendance } from "../../types/types";
 import styles from "./AttendanceTable.module.css";
 import { useNavigate } from "react-router-dom";
 import { setSelectedLesson } from "../../store/attendanceJournalSlice";
@@ -28,10 +27,10 @@ const AttendanceTable: React.FC = () => {
             <th rowSpan={3}>Talabaning F.I.Sh.</th>
             <th rowSpan={3}>S</th>
             <th rowSpan={3}>SZ</th>
-            <th colSpan={selectedData.attendanceDate?.length || 0}>Dars sanasi</th>
+            <th colSpan={selectedData.attendanceDate.length}>Dars sanasi</th>
           </tr>
           <tr>
-            {selectedData.attendanceDate?.map((dateInfo: AttendanceDate, index: number) => (
+            {selectedData.attendanceDate.map((dateInfo, index) => (
               <th key={index}>
                 <button
                   className={styles.dateButton}
@@ -43,41 +42,40 @@ const AttendanceTable: React.FC = () => {
             ))}
           </tr>
           <tr>
-            {selectedData.attendanceDate?.map((dateInfo: AttendanceDate, index: number) => (
-              <th key={index}>
-                <div className={styles.lessonPair}>{dateInfo.pair}</div>
-              </th>
+            {selectedData.attendanceDate.map((dateInfo, index) => (
+              <th key={index} className={styles.lessonPair}>{dateInfo.pair}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {selectedData.groupStudents.map((student: Student, studentIndex: number) => (
-            <tr key={studentIndex}>
+          {selectedData.groupStudents.map((student, studentIndex) => (
+            <tr key={student.id}>
               <td>{studentIndex + 1}</td>
               <td>{student.fullname}</td>
               <td>{student.s ?? ""}</td>
               <td>{student.sz ?? ""}</td>
-              {student.infoattendance.map((info: InfoAttendance, index: number) => (
-                <td key={index}>
-                  {info.attendance !== null ? (
-                    <span className={styles.absent}>{info.attendance}</span>
-                  ) : (
-                    ""
-                  )}
-                </td>
-              ))}
+              {selectedData.attendanceDate.map((dateInfo, dateIndex) => {
+                const studentAttendance = student.infoattendance.find(
+                  (info) => info.date === dateInfo.date && info.pair === dateInfo.pair
+                );
+
+                return (
+                  <td key={dateIndex}>
+                    {studentAttendance ? (
+                      <span className={styles.absent}>{studentAttendance.attendance ?? "-"}</span>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                );
+              })}
             </tr>
           ))}
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            {selectedData.attendanceDate?.map((att: AttendanceDate, index: number) => (
+            <td colSpan={4}></td>
+            {selectedData.attendanceDate.map((att, index) => (
               <td key={index}>
-                {att.status ? (
-                  <input type="checkbox" className={styles.checkbox} checked disabled />
-                ) : null}
+                <input type="checkbox" className={styles.checkbox} checked={att.status} disabled />
               </td>
             ))}
           </tr>

@@ -4,7 +4,7 @@ import { data } from "../../data/data";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedJournal } from "../../store/attendanceJournalSlice";
-
+import { FromAttendanceJournal } from "../../types/types";
 
 const AttendanceJournal = () => {
   const [selectedYear, setSelectedYear] = useState("2024-2025");
@@ -13,8 +13,13 @@ const AttendanceJournal = () => {
   const dispatch = useDispatch();
 
   const handleRowClick = (id: number) => {
-    dispatch(setSelectedJournal(id));
-    navigate(`/attendance-journal/${id}`);
+    const selectedItem: FromAttendanceJournal | undefined = data.find(
+      (item) => item.id === id
+    );
+    if (selectedItem) {
+      dispatch(setSelectedJournal(selectedItem)); // ✅ To‘liq obyekt yuboriladi
+      navigate(`/attendance-journal/${id}`);
+    }
   };
 
   const filteredData = data.filter(
@@ -72,7 +77,9 @@ const AttendanceJournal = () => {
       </table>
 
       <div className={styles.pagination}>
-        {filteredData.length > 0 ? `1-${filteredData.length} / jami ${filteredData.length} ta` : "Ma'lumot topilmadi"}
+        {filteredData.length > 0
+          ? `1-${filteredData.length} / jami ${filteredData.length} ta`
+          : "Ma'lumot topilmadi"}
       </div>
     </div>
   );
