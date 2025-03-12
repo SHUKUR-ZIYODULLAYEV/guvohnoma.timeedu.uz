@@ -8,7 +8,7 @@ const LessonAttendanceTable: React.FC = () => {
     (state: RootState) => state.attendanceJournal
   );
 
-  // useMemo bilan boshlang‘ich attendanceData ni shakllantiramiz
+  // Ma'lumotlarni boshlang‘ich holatda tayyorlash
   const initialAttendanceData = useMemo(() => {
     if (!selectedJournal || !lessonDateId || !lessonPair) return [];
 
@@ -23,19 +23,31 @@ const LessonAttendanceTable: React.FC = () => {
     }));
   }, [selectedJournal, lessonDateId, lessonPair]);
 
-  // Foydalanuvchi kiritgan ma'lumotlarni saqlash uchun state
+  // Foydalanuvchi ma'lumotlarini saqlash uchun state
   const [attendanceData, setAttendanceData] = useState(initialAttendanceData);
 
-  // Qiymat o‘zgarganda holatni yangilash
+  // Qiymatni o'zgartirish
   const handleChange = (index: number, field: "attendance" | "grade", value: string) => {
     setAttendanceData((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, [field]: value } : item
-      )
+      prev.map((item, i) => {
+        if (i !== index) return item;
+
+        let newValue: string | number = value;
+
+        if (field === "attendance") {
+          // Faqat "" yoki 2 bo‘lishi kerak
+          newValue = value === "2" ? 2 : "";
+        } else if (field === "grade") {
+          // 0 dan 1 gacha bo‘lishi kerak
+          const numValue = parseFloat(value);
+          newValue = value === "" || (numValue >= 0 && numValue <= 1) ? numValue : item.grade;
+        }
+
+        return { ...item, [field]: newValue };
+      })
     );
   };
 
-  // Agar ma'lumotlar topilmasa
   if (!selectedJournal || !lessonDateId || !lessonPair) {
     return <div>Ma'lumot topilmadi</div>;
   }
@@ -59,15 +71,18 @@ const LessonAttendanceTable: React.FC = () => {
               <td>
                 <input
                   type="text"
-                  value={student.attendance}
+                  value={student.attendance.toString()}
                   onChange={(e) => handleChange(index, "attendance", e.target.value)}
                   className={styles.inputField}
                 />
               </td>
               <td>
                 <input
-                  type="text"
-                  value={student.grade}
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="1"
+                  value={student.grade.toString()}
                   onChange={(e) => handleChange(index, "grade", e.target.value)}
                   className={styles.inputField}
                 />
